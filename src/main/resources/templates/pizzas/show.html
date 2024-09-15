@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head th:replace="~{/components/fragments :: head}">
+    <title>Pizzas List</title>
+</head>
+
+<body>
+<header th:insert="~{/components/fragments :: navbar('pizzas')}"></header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-12">
+            <th:block th:object="${pizza}">
+                <h1 class="py-3 text-center">Detail for [[*{name}]]</h1>
+                <div class="d-flex justify-content-center">
+                    <div class="card text-center" style="width: 18rem;">
+                        <img th:src="*{photo}" class="card-img-top" alt="photo of the pizza">
+                        <div class="card-body">
+                            <h5 class="card-title">[[*{id}]] - [[*{name}]]</h5>
+                            <p class="card-text" th:text="*{description}"></p>
+                            <a th:href="@{/pizzas}" class="btn btn-primary">Go back</a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{/components/fragments :: scripts}"></th:block>
+</body>
+</html>
