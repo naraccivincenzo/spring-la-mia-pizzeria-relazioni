@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.lessons.booleaners</groupId>
-    <artifactId>spring-la-mia-pizzeria-crud</artifactId>
+    <artifactId>spring-la-mia-pizzeria-relazioni</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spring-la-mia-pizzeria-crud</name>
     <description>spring-la-mia-pizzeria-crud</description>

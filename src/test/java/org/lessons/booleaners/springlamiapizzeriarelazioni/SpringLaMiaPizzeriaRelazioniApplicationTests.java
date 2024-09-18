@@ -1,10 +1,10 @@
-package org.lessons.booleaners.springlamiapizzeriacrud;
+package org.lessons.booleaners.springlamiapizzeriarelazioni;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringLaMiaPizzeriaCrudApplicationTests {
+class SpringLaMiaPizzeriaRelazioniApplicationTests {
 
     @Test
     void contextLoads() {

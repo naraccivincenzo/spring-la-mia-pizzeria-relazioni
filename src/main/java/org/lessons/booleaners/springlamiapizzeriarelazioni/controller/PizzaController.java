@@ -1,8 +1,8 @@
-package org.lessons.booleaners.springlamiapizzeriacrud.controller;
+package org.lessons.booleaners.springlamiapizzeriarelazioni.controller;
 
 import jakarta.validation.Valid;
-import org.lessons.booleaners.springlamiapizzeriacrud.model.Pizza;
-import org.lessons.booleaners.springlamiapizzeriacrud.repo.PizzaRepository;
+import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Pizza;
+import org.lessons.booleaners.springlamiapizzeriarelazioni.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,15 +17,15 @@ import java.util.List;
 public class PizzaController {
 
     @Autowired
-    private PizzaRepository repo;
+    private PizzaService service;
 
     @GetMapping()
     public String pizzas(Model model, @RequestParam(name = "name", required = false) String name) {
         List<Pizza> pizzas;
-        if(name != null && !name.isEmpty()) {
-            pizzas = repo.findByNameContainingIgnoreCaseOrderByNameAsc(name);
+        if (name != null && ! name.isEmpty()) {
+            pizzas = service.findByName(name);
         } else {
-            pizzas = repo.findAll();
+            pizzas = service.findAll();
         }
         model.addAttribute("pizza", pizzas);
         return "/pizzas/index";
@@ -33,7 +33,7 @@ public class PizzaController {
 
     @GetMapping("{id}")
     public String show(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("pizza", repo.findById(id).get());
+        model.addAttribute("pizza", service.getById(id));
         return "/pizzas/show";
     }
 
@@ -48,7 +48,7 @@ public class PizzaController {
         if (bindingResult.hasErrors()) {
             return "/pizzas/create";
         }
-        repo.save(formPizza);
+        service.create(formPizza);
         attributes.addFlashAttribute("createMessage", "Pizza " + formPizza.getName() + " successfully inserted");
 
         return "redirect:/pizzas";
@@ -56,7 +56,7 @@ public class PizzaController {
 
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("pizza", repo.findById(id).get());
+        model.addAttribute("pizza", service.getById(id));
         return "/pizzas/edit";
     }
 
@@ -66,7 +66,7 @@ public class PizzaController {
         if (bindingResult.hasErrors()) {
             return "/pizzas/edit";
         }
-        repo.save(formPizza);
+        service.update(formPizza);
         attributes.addFlashAttribute("updateMessage", "Pizza " + formPizza.getName() + " successfully updated");
 
         return "redirect:/pizzas";
@@ -74,7 +74,7 @@ public class PizzaController {
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, RedirectAttributes attributes) {
-        repo.deleteById(id);
+        service.delete(id);
         attributes.addFlashAttribute("deleteMessage", "Pizza " + id + " successfully deleted");
         return "redirect:/pizzas";
     }

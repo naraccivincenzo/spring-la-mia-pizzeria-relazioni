@@ -1,4 +1,4 @@
-package org.lessons.booleaners.springlamiapizzeriacrud.model;
+package org.lessons.booleaners.springlamiapizzeriarelazioni.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.text.NumberFormat;
 import java.time.Instant;
+import java.util.List;
 import java.util.Locale;
 
 @Entity
@@ -39,6 +40,9 @@ public class Pizza {
 
     @UpdateTimestamp
     private Instant updatedAt;
+
+    @OneToMany(mappedBy = "pizza", cascade = {CascadeType.REMOVE})
+    private List<Discount> discounts;
 
     public Integer getId() {
         return id;
@@ -89,5 +93,13 @@ public class Pizza {
 
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(List<Discount> discounts) {
+        this.discounts = discounts;
     }
 }

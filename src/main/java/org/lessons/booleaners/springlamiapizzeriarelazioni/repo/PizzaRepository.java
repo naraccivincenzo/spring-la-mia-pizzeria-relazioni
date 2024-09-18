@@ -1,6 +1,6 @@
-package org.lessons.booleaners.springlamiapizzeriacrud.repo;
+package org.lessons.booleaners.springlamiapizzeriarelazioni.repo;
 
-import org.lessons.booleaners.springlamiapizzeriacrud.model.Pizza;
+import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Pizza;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
