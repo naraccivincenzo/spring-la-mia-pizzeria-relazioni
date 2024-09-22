@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-6">
             <h1 class="py-3 text-center">Insert a new special offer for
-                <span th:text="${discount.getPizza().name}"></span>
+                <span th:text="${discount.getPizza().getName()}"></span>
             </h1>
             <form id="pizza-form" th:object="${discount}" th:action="@{/discounts/create}" method="POST">
 

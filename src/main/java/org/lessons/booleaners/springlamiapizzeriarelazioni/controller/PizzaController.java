@@ -3,6 +3,7 @@ package org.lessons.booleaners.springlamiapizzeriarelazioni.controller;
 import jakarta.validation.Valid;
 import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Discount;
 import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Pizza;
+import org.lessons.booleaners.springlamiapizzeriarelazioni.service.IngredientService;
 import org.lessons.booleaners.springlamiapizzeriarelazioni.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ public class PizzaController {
 
     @Autowired
     private PizzaService service;
+
+    @Autowired
+    private IngredientService ingredientService;
 
     @GetMapping()
     public String pizzas(Model model, @RequestParam(name = "name", required = false) String name) {
@@ -51,12 +55,14 @@ public class PizzaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredients", ingredientService.findAll());
         return "/pizzas/create";
     }
 
     @PostMapping("/create")
-    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, RedirectAttributes attributes) {
+    public String store(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientService.findAll());
             return "/pizzas/create";
         }
         service.create(formPizza);
@@ -68,13 +74,15 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", service.getById(id));
+        model.addAttribute("ingredients", ingredientService.findAll());
         return "/pizzas/edit";
     }
 
     @PostMapping("/edit/{id}")
-    public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, RedirectAttributes attributes) {
+    public String update(@Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, Model model, RedirectAttributes attributes) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("ingredients", ingredientService.findAll());
             return "/pizzas/edit";
         }
         service.update(formPizza);

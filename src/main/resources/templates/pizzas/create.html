@@ -35,6 +35,15 @@
                         </ul>
                     </div>
                 </div>
+
+                <div th:each="ingredient : ${ingredients}" class="form-check mb-3" role="group"
+                     aria-label="Basic checkbox toggle button group">
+                    <input type="checkbox" class="form-check-input" autocomplete="off" th:value="${ingredient.id}"
+                           th:id="|ingredient_${ingredient.id}|" th:field="${pizza.ingredients}">
+                    <label class="form-check-label" th:for="|ingredient_${ingredient.id}|"
+                           th:text="${ingredient.name}"></label>
+                </div>
+
                 <div class="mb-3">
                     <label for="photo" class="form-label">Url of the pizza's photo</label>
                     <input type="text" class="form-control" id="photo" placeholder="Url of the pizza's photo" th:classappend="${#fields.hasErrors('photo')}? 'is-invalid'" th:field="*{photo}">

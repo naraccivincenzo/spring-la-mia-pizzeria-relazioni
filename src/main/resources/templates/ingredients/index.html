@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head th:replace="~{/components/fragments :: head}">
+    <title>Special Offer's List</title>
+</head>
+
+<body>
+<header th:insert="~{/components/fragments :: navbar('ingredients')}"></header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="py-3 text-center">List of available the ingredients</h1>
+            <th:block th:if="${deleteMessage != null}">
+                <div th:replace="~{/components/fragments :: deleteAlert(${deleteMessage})}"></div>
+            </th:block>
+            <th:block th:if="${updateMessage != null}">
+                <div th:replace="~{/components/fragments :: successAlert(${updateMessage})}"></div>
+            </th:block>
+            <th:block th:if="${createMessage != null}">
+                <div th:replace="~{/components/fragments :: successAlert(${createMessage})}"></div>
+            </th:block>
+            <form id="searchForm" class="d-flex" th:action="@{/templates/ingredients}" method="GET">
+                <input id="searchInput" class="form-control me-2" type="text" name="name" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-outline-success col-3 me-2" type="submit">Search</button>
+                <a class="btn btn-outline-success col-3" th:href="@{/ingredients/create}">Insert a new ingredient</a>
+            </form>
+            <th:block th:if="${ingredient.size() > 0}">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th class="button-headers"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ingredient : ${ingredient}">
+                        <td th:text="${ingredient.id}"></td>
+                        <td th:text="${ingredient.name}"></td>
+                        <td>
+                            <a th:href="@{/ingredients/{id}(id=${ingredient.id})}"
+                               class="btn btn-sm btn-primary">Show</a>
+                            <a th:href="@{/ingredients/edit/{id}(id=${ingredient.id})}"
+                               class="btn btn-sm btn-success">Edit</a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    th:data-bs-target="'#delete-modal-' + ${ingredient.id}">
+                                Delete
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'delete-modal-' + ${ingredient.id}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting
+                                                [[${ingredient.name}]]</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure that you want to PERMANENTLY delete
+                                            [[${ingredient.name}]]?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                    data-bs-dismiss="modal">Close
+                                            </button>
+                                            <form class="d-inline-block"
+                                                  th:action="@{/ingredients/delete/{id}(id = ${ingredient.id})}"
+                                                  method="POST">
+                                                <button class="btn btn-sm btn-danger" onclick="return ">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </th:block>
+            <th:block th:unless="${ingredient.size() > 0}">
+                <h3 class="py-5 text-center">
+                    No ingredients are available this time
+                </h3>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{/components/fragments :: scripts}"></th:block>
+</body>
+</html>

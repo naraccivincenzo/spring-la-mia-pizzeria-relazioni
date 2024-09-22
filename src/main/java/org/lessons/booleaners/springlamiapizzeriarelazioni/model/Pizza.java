@@ -44,6 +44,10 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza", cascade = {CascadeType.REMOVE})
     private List<Discount> discounts;
 
+    @ManyToMany()
+    @JoinTable(name = "pizza_ingredient", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    private List<Ingredient> ingredients;
+
     public Integer getId() {
         return id;
     }
@@ -101,5 +105,13 @@ public class Pizza {
 
     public void setDiscounts(List<Discount> discounts) {
         this.discounts = discounts;
+    }
+
+    public List<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 }

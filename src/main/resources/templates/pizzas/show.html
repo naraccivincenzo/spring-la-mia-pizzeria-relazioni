@@ -19,6 +19,11 @@
                             <h5 class="card-title">[[*{id}]] - [[*{name}]]</h5>
                             <p class="card-text" th:text="*{description}"></p>
                         </div>
+                        <h5>Pizza's Ingredient</h5>
+                        <ul class="list-group list-group-flush" th:each="ingredient : *{ingredients}">
+                            <li class="list-group-item">[[${ingredient.name}]]</li>
+                        </ul>
+                        <h5>Special Offer</h5>
                         <ul class="list-group list-group-flush" th:each="discount : *{discounts}">
                             <li class="list-group-item">[[${discount.discountName}]]</li>
                             <li class="list-group-item">Discount starts [[${discount.startDate}]]</li>
