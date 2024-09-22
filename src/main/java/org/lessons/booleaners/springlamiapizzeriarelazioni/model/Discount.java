@@ -1,6 +1,8 @@
 package org.lessons.booleaners.springlamiapizzeriarelazioni.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,10 +20,10 @@ public class Discount {
     @NotEmpty
     private String discountName;
 
-    @NotNull
-    @NotEmpty
+    @FutureOrPresent
     private LocalDate startDate;
 
+    @Future
     private LocalDate endDate;
 
     @ManyToOne

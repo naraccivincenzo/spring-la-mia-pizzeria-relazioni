@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head th:replace="~{/components/fragments :: head}">
+    <title>Pizzas List</title>
+</head>
+
+<body>
+<header th:insert="~{/components/fragments :: navbar('discounts')}"></header>
+
+<main class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <h1 class="py-3 text-center">Insert a new special offer for
+                <span th:text="${discount.getPizza().name}"></span>
+            </h1>
+            <form id="pizza-form" th:object="${discount}" th:action="@{/discounts/create}" method="POST">
+
+                <input type="hidden" th:field="*{pizza}" id="pizza">
+                <!--                <div th:if="${#fields.hasAnyErrors()}">-->
+                <!--                    <ul>-->
+                <!--                        <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />-->
+                <!--                    </ul>-->
+                <!--                </div>-->
+                <div class="mb-3">
+                    <label for="discountName" class="form-label">Name of the special offer</label>
+                    <input type="text" class="form-control" id="discountName"
+                           th:classappend="${#fields.hasErrors('discountName')}? 'is-invalid'"
+                           placeholder="Name of the special offer" th:field="*{discountName}">
+                    <div th:if="${#fields.hasErrors('discountName')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('discountName')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start date of special offer</label>
+                    <input type="date" class="form-control" id="startDate" placeholder="Start date of special offer"
+                           th:classappend="${#fields.hasErrors('startDate')}? 'is-invalid'" th:field="*{startDate}">
+                    <div th:if="${#fields.hasErrors('startDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End date of special offer</label>
+                    <input type="date" class="form-control" id="endDate" placeholder="End date of special offer"
+                           th:classappend="${#fields.hasErrors('endDate')}? 'is-invalid'" th:field="*{endDate}">
+                    <div th:if="${#fields.hasErrors('endDate')}" class="invalid-feedback">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-primary btn-lg" value="Insert a new special offer">
+                    <input type="reset" class="btn btn-warning btn-lg" value="Reset fields">
+                    <a class="btn btn-danger btn-lg" th:href="@{/pizzas}">Go Back</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{/components/fragments :: scripts}"></th:block>
+</body>
+</html>

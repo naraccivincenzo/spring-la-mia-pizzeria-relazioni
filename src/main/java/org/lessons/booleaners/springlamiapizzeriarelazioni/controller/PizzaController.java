@@ -1,6 +1,7 @@
 package org.lessons.booleaners.springlamiapizzeriarelazioni.controller;
 
 import jakarta.validation.Valid;
+import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Discount;
 import org.lessons.booleaners.springlamiapizzeriarelazioni.model.Pizza;
 import org.lessons.booleaners.springlamiapizzeriarelazioni.service.PizzaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -35,6 +37,15 @@ public class PizzaController {
     public String show(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("pizza", service.getById(id));
         return "/pizzas/show";
+    }
+
+    @GetMapping("/{id}/discount")
+    public String showDiscount(@PathVariable("id") Integer id, Model model) {
+        Discount discount = new Discount();
+        discount.setStartDate(LocalDate.now());
+        discount.setPizza(service.getById(id));
+        model.addAttribute("discount", discount);
+        return "/discounts/create";
     }
 
     @GetMapping("/create")

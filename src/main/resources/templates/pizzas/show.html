@@ -25,6 +25,8 @@
                             <li class="list-group-item">Discount ends [[${discount.endDate}]]</li>
                         </ul>
                         <div class="card-body">
+                            <a th:href="@{/pizzas/{id}/discount(id=${pizza.id})}" class="btn btn-success">Nuova
+                                Offerta</a>
                             <a th:href="@{/pizzas}" class="btn btn-primary">Go back</a>
                         </div>
                     </div>

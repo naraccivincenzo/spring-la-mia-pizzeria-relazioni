@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head th:replace="~{/components/fragments :: head}">
+    <title>Special Offer's List</title>
+</head>
+
+<body>
+<header th:insert="~{/components/fragments :: navbar('discounts')}"></header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="py-3 text-center">List of available Special Offers</h1>
+            <th:block th:if="${deleteMessage != null}">
+                <div th:replace="~{/components/fragments :: deleteAlert(${deleteMessage})}"></div>
+            </th:block>
+            <th:block th:if="${updateMessage != null}">
+                <div th:replace="~{/components/fragments :: successAlert(${updateMessage})}"></div>
+            </th:block>
+            <th:block th:if="${createMessage != null}">
+                <div th:replace="~{/components/fragments :: successAlert(${createMessage})}"></div>
+            </th:block>
+            <form id="searchForm" class="d-flex" th:action="@{/discounts}" method="GET">
+                <input id="searchInput" class="form-control me-2" type="text" name="name" placeholder="Search"
+                       aria-label="Search">
+                <button class="btn btn-outline-success col-3 me-2" type="submit">Search</button>
+                <!--                <a class="btn btn-outline-success col-3" th:href="@{/discounts/create}">Insert a special offer</a>-->
+            </form>
+            <th:block th:if="${discount.size() > 0}">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Pizza in Special Offer</th>
+                        <th class="button-headers"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="discount : ${discount}">
+                        <td th:text="${discount.id}"></td>
+                        <td th:text="${discount.discountName}"></td>
+                        <td th:text="${discount.startDate}"></td>
+                        <td th:text="${discount.endDate}"></td>
+                        <td th:text="${discount.getPizza().getName()}"></td>
+                        <td>
+                            <!--                    <a th:href="@{/discounts/{id}(id=${discount.id})}" class="btn btn-sm btn-primary">Show</a>-->
+                            <a th:href="@{/discounts/edit/{id}(id=${discount.id})}"
+                               class="btn btn-sm btn-success">Edit</a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    th:data-bs-target="'#delete-modal-' + ${discount.id}">
+                                Delete
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="'delete-modal-' + ${discount.id}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Deleting
+                                                [[${discount.discountName}]]</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure that you want to PERMANENTLY delete
+                                            [[${discount.discountName}]]?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                    data-bs-dismiss="modal">Close
+                                            </button>
+                                            <form class="d-inline-block"
+                                                  th:action="@{/discounts/delete/{id}(id = ${discount.id})}"
+                                                  method="POST">
+                                                <button class="btn btn-sm btn-danger" onclick="return ">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </th:block>
+            <th:block th:unless="${discount.size() > 0}">
+                <h3 class="py-5 text-center">
+                    No special offers are available this time
+                </h3>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{/components/fragments :: scripts}"></th:block>
+</body>
+</html>

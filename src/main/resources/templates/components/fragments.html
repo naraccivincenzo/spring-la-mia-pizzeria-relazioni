@@ -26,6 +26,10 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/pizzas}" th:classappend="${route == 'pizzas' ? 'active' : ''}">Pizzas</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/discounts}"
+                       th:classappend="${route == 'discounts' ? 'active' : ''}">Special Offer</a>
+                </li>
             </ul>
         </div>
     </div>

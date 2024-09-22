@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head th:replace="~{/components/fragments :: head}">
+    <title>Pizzas List</title>
+</head>
+
+<body>
+<header th:insert="~{/components/fragments :: navbar('discounts')}"></header>
+
+<main class="container">
+    <div class="row">
+        <div class="col-12">
+            <th:block th:object="${discount}">
+                <h1 class="py-3 text-center">Detail for [[*{discountName}]]</h1>
+                <div class="d-flex justify-content-center">
+                    <div class="card text-center" style="width: 18rem;">
+                        <!--                        <img th:src="*{photo}" class="card-img-top" alt="photo of the pizza">-->
+                        <div class="card-body">
+                            <h5 class="card-title">[[*{id}]] - [[*{discountName}]]</h5>
+                            <!--                            <p class="card-text" th:text="*{description}"></p>-->
+                        </div>
+                        <!--                        <ul class="list-group list-group-flush" th:each="discount : *{discounts}">-->
+                        <!--                            <li class="list-group-item">[[${discount.discountName}]]</li>-->
+                        <!--                            <li class="list-group-item">Discount starts [[${discount.startDate}]]</li>-->
+                        <!--                            <li class="list-group-item">Discount ends [[${discount.endDate}]]</li>-->
+                        <!--                        </ul>-->
+                        <div class="card-body">
+                            <a th:href="@{/discounts}" class="btn btn-primary">Go back</a>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</main>
+<th:block th:replace="~{/components/fragments :: scripts}"></th:block>
+</body>
+</html>
